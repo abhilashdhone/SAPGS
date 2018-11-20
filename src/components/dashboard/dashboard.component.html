@@ -1,0 +1,15 @@
+<div class="top-bar">
+  <div class="top-bar-title">SAPGS</div>
+  <div>
+    <div class="top-bar-left">
+      <button pButton class="ui-button-info" icon="fa-map" iconPos="left" label="Areas/Lots" routerLink="/areas-lots"  routerLinkActive="active" [disabled]="areasbutton" (click)="clear(); areasbutton=true"></button>
+      <button pButton class="ui-button-success" icon="fa-users" iconPos="left" label="Users/Handlers" routerLink="/users-handlers"  routerLinkActive="active" [disabled]="usersbutton" (click)="clear(); usersbutton=true"></button>
+      <button pButton class="ui-button-warning" icon="fa-file-text" iconPos="left" label="Messages" routerLink="/messages"  routerLinkActive="active" [disabled]="messagesbutton" (click)="clear(); messagesbutton=true"></button>
+      <button pButton class="ui-button-danger" icon="fa-car" iconPos="left" label="Booked/Occupied Infos" routerLink="/booked-occupied-infos"  routerLinkActive="active" [disabled]="infosbutton" (click)="clear(); infosbutton=true"></button>
+    </div>
+    <div class="top-bar-right">
+      <button pButton class="ui-button-danger" icon="fa-sign-out" iconPos="left" label="Logout" (click)="logout()"></button>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

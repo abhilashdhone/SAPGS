@@ -1,0 +1,16 @@
+<p-dialog header="SAPGS | Admin Login" [(visible)]="!isAdminLoggedIn" modal="modal" width="300" responsive="true">
+    <div [hidden]="!loginError">
+      <span style="color: darkorange"><i>Username or password incorrect!</i></span>
+    </div>
+    <form (ngSubmit)="logIn(username.value, password.value)" #loginForm="ngForm">
+      <label for="username" style="color: white">Userame</label>
+      <input pInputText type="text" required [(ngModel)]="username.value" id="username" name="username" #username>
+      <label for="password" style="color: white">Password</label>
+      <input pInputText type="password" required [(ngModel)]="password.value" id="password" name="password" #password><br>
+      <p-footer>
+          <button pButton icon="fa-sign-in" iconPos="right" class="button expanded ui-button-info" label="Login" type="submit" [disabled]="!loginForm.form.valid"></button>
+          <button pButton icon="fa-recycle" iconPos="right" class="button expanded ui-button-warning" label="Clear all" type="button" (click)="loginForm.reset()"></button>
+      </p-footer>
+    </form>
+</p-dialog>
+<dashboard *ngIf="isAdminLoggedIn"></dashboard>

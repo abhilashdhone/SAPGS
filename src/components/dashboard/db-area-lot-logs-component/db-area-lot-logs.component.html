@@ -1,0 +1,48 @@
+<br>
+<div class="row">
+    <h4>Area and Lot Logs</h4>
+</div>
+<div class="row">
+    <p-tabView>
+        <p-tabPanel header="Area Logs" leftIcon="fa-book">
+            <p-dataTable #dtarealogs [value]="arealogs" scrollable="true" scrollHeight="500px" [globalFilter]="gbarealogs">
+                <p-header>Area Logs
+                    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+                        <input #gbarealogs type="text" pInputText size="50" placeholder="Search">
+                    </div>
+                </p-header>
+                <p-column field="action" header="Action" [style]="{'width':'107px','color':'black'}"></p-column>
+                <p-column field="fk_areaKey" header="Area ID" [style]="{'width':'250px','color':'black'}"></p-column>
+                <p-column field="fk_areaName" header="Area Name" [style]="{'width':'300px','color':'black'}"></p-column>
+                <p-column field="timeStamp" header="Time Stamp" [style]="{'width':'500px','color':'black'}"></p-column>
+                <p-footer>
+                    <div class="ui-helper-clearfix">
+                        <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export Area Logs" class="ui-button-warning" (click)="dtarealogs.exportCSV()" style="float:left"></button>
+                        <button type="button" pButton icon="fa-repeat" iconPos="left" label="Load All" class="ui-button-danger" (click)="getAreaLogs()" style="float:right"></button>
+                        <button type="button" pButton icon="fa-refresh" iconPos="left" label="Load More" class="ui-button-info" (click)="getAreaLogs(5)" style="float:right"></button>
+                    </div>
+                </p-footer>
+            </p-dataTable>
+        </p-tabPanel>
+        <p-tabPanel header="Lot Logs" leftIcon="fa-book">
+            <p-dataTable #dtlotlogs [value]="lotlogs" scrollable="true" scrollHeight="500px" [globalFilter]="gblotlogs">
+                <p-header>Lot Logs
+                    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+                        <input #gblotlogs type="text" pInputText size="50" placeholder="Search">
+                    </div>
+                </p-header>
+                <p-column field="action" header="Action" [style]="{'width':'107px','color':'black'}"></p-column>
+                <p-column field="fk_lotKey" header="Lot ID" [style]="{'width':'250px','color':'black'}"></p-column>
+                <p-column field="fk_lotName" header="Lot Name" [style]="{'width':'300px','color':'black'}"></p-column>
+                <p-column field="timeStamp" header="Time Stamp" [style]="{'width':'500px','color':'black'}"></p-column>
+                <p-footer>
+                    <div class="ui-helper-clearfix">
+                        <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export Lot Logs" class="ui-button-warning" (click)="dtlotlogs.exportCSV()" style="float:left"></button>
+                        <button type="button" pButton icon="fa-repeat" iconPos="left" label="Load All" class="ui-button-danger" (click)="getLotLogs()" style="float:right"></button>
+                        <button type="button" pButton icon="fa-refresh" iconPos="left" label="Load More" class="ui-button-info" (click)="getLotLogs(5)" style="float:right"></button>
+                    </div>
+                </p-footer>
+            </p-dataTable>
+        </p-tabPanel>
+    </p-tabView>
+</div>

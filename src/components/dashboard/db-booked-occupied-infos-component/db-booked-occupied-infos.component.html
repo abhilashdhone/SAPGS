@@ -1,0 +1,52 @@
+<br>
+<div class="row">
+    <h4>Booked and Occupied Infos</h4>
+</div>
+<div class="row">
+    <p-tabView>
+        <p-tabPanel header="Occupied Infos" leftIcon="fa-car">
+            <p-dataTable #dtoccupiedinfos [value]="occupiedinfos" scrollable="true" scrollHeight="500px"  scrollWidth="100%" [globalFilter]="gboccupiedinfos">
+                <p-header>Occupied Infos
+                    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+                        <input #gboccupiedinfos type="text" pInputText size="50" placeholder="Search">
+                    </div>
+                </p-header>
+                <p-column field="areaName" header="Area Name" [style]="{'width':'250px','color':'black'}"></p-column>
+                <p-column field="lotName" header="Lot Name" [style]="{'width':'250px','color':'black'}"></p-column>
+                <p-column field="name" header="User Name" [style]="{'width':'250px','color':'black'}"></p-column>
+                <p-column field="registration" header="Vehicle Registration" [style]="{'width':'200px','color':'black'}"></p-column>
+                <p-column field="license" header="Driver License" [style]="{'width':'200px','color':'black'}"></p-column>
+                <p-column field="timeStamp" header="Time Stamp" [style]="{'width':'500px','color':'black'}"></p-column>
+                <p-footer>
+                    <div class="ui-helper-clearfix">
+                        <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export Occupied Infos" class="ui-button-warning" (click)="dtoccupiedinfos.exportCSV()" style="float:left"></button>
+                        <button type="button" pButton icon="fa-repeat" iconPos="left" label="Load All" class="ui-button-danger" (click)="getOccupiedInfos()" style="float:right"></button>
+                        <button type="button" pButton icon="fa-refresh" iconPos="left" label="Load More" class="ui-button-info" (click)="getOccupiedInfos(5)" style="float:right"></button>
+                    </div>
+                </p-footer>
+            </p-dataTable>
+        </p-tabPanel>
+        <p-tabPanel header="Booked Infos" leftIcon="fa-bookmark">
+            <p-dataTable #dtbookedinfos [value]="bookedinfos" scrollable="true" scrollHeight="500px" scrollWidth="100%" [globalFilter]="gbbookedinfos">
+                <p-header>Booked Infos
+                    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+                        <input #gbbookedinfos type="text" pInputText size="50" placeholder="Search">
+                    </div>
+                </p-header>
+                <p-column field="areaName" header="Area Name" [style]="{'width':'250px','color':'black'}"></p-column>
+                <p-column field="lotName" header="Lot Name"[style]="{'width':'250px','color':'black'}"></p-column>
+                <p-column field="name" header="User Name" [style]="{'width':'200px','color':'black'}"></p-column>
+                <p-column field="contact" header="User Contact" [style]="{'width':'200px','color':'black'}"></p-column>
+                <p-column field="timeStamp" header="Time Stamp" [style]="{'width':'500px','color':'black'}"></p-column>
+                <p-footer>
+                    <div class="ui-helper-clearfix">
+                        <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export Booked Infos" class="ui-button-warning" (click)="dtbookedinfos.exportCSV()" style="float:left"></button>
+                        <button type="button" pButton icon="fa-repeat" iconPos="left" label="Load All" class="ui-button-danger" (click)="getBookedInfos()" style="float:right"></button>
+                        <button type="button" pButton icon="fa-refresh" iconPos="left" label="Load More" class="ui-button-info" (click)="getBookedInfos(5)" style="float:right"></button>
+                    </div>
+                </p-footer>
+            </p-dataTable>
+        </p-tabPanel>
+    </p-tabView>
+</div>
+<db-info-logs></db-info-logs>

@@ -1,0 +1,176 @@
+<p-growl [value]="msgs" sticky="sticky"></p-growl>
+
+<p-messages [value]="errmsgs"></p-messages>
+
+<p-confirmDialog width="425"></p-confirmDialog>
+
+<p-blockUI [blocked]="blockedPanel">
+    <img src="./assets/loading-small.gif" style="position:absolute;top:50%;left:50%;width:30px;height:30px">
+</p-blockUI>
+
+<p-dialog header="Add Area" [(visible)]="addArea" modal="modal" width="300" responsive="true">
+    <form (ngSubmit)="setActiveAddArea(name.value, lng.value, lat.value); activeAddLot.reset()" #activeAddArea="ngForm">
+      <label for="name" style="color: black">Name</label>
+      <input pInputText type="text" required [(ngModel)]="name.value" id="name" name="name" #name>
+      <label for="lng" style="color: black">Longitude</label>
+      <input pInputText type="number" required [(ngModel)]="lng.value" id="lng" name="lng" #lng>
+      <label for="lat" style="color: black">Latitude</label>
+      <input pInputText type="number" required [(ngModel)]="lat.value" id="lat" name="lat" #lat><br>
+      <p-footer>
+          <button pButton icon="fa-arrow-circle-right" iconPos="right" class="button expanded ui-button-info" label="Next" type="submit" [disabled]="!activeAddArea.form.valid"></button>
+          <button pButton icon="fa-recycle" iconPos="right" class="button expanded ui-button-warning" label="Clear all" type="button" (click)="activeAddArea.reset()"></button>
+      </p-footer>
+    </form>
+</p-dialog>
+
+<p-dialog header="Associate Lot" [(visible)]="addLot" modal="modal" width="300" responsive="true">
+    <form (ngSubmit)="setActiveAddLot(name.value, lat.value, lng.value, address.value, total.value); completeAddArea.reset()" #activeAddLot="ngForm">
+      <label for="name" style="color: black">Name</label>
+      <input pInputText type="text" required [(ngModel)]="name.value" id="name" name="name" #name>
+      <label for="lat" style="color: black">Latitude</label>
+      <input pInputText type="number" required [(ngModel)]="lat.value" id="lat" name="lat" #lat>
+      <label for="lng" style="color: black">Longitude</label>
+      <input pInputText type="number" required [(ngModel)]="lng.value" id="lng" name="lng" #lng>
+      <label for="address" style="color: black">Address</label>
+      <input pInputText type="text" required [(ngModel)]="address.value" id="address" name="address" #address>
+      <label for="total" style="color: black">Capacity</label>
+      <input pInputText type="number" required [(ngModel)]="total.value" id="total" name="total" #total>
+      <br>
+      <p-footer>
+          <button pButton icon="fa-arrow-circle-right" iconPos="right" class="button expanded ui-button-info" label="Next" type="submit" [disabled]="!activeAddLot.form.valid"></button>
+          <button pButton icon="fa-recycle" iconPos="right" class="button expanded ui-button-warning" label="Clear all" type="button" (click)="activeAddLot.reset()"></button>
+          <button pButton icon="fa-arrow-circle-left" iconPos="right" class="button expanded ui-button-danger" label="Back" type="button" (click)="addLot=false; addArea=true; activeAddArea.reset()"></button>
+      </p-footer>
+    </form>
+</p-dialog>
+
+<!--@@@@@@@@@@@@@@@@@@@@@@@              Direct Add Lot             @@@@@@@@@@@@@@@@@@@@@@@-->
+<p-dialog header="Add Lot" [(visible)]="dAddLot" modal="modal" width="300" responsive="true">
+    <form (ngSubmit)="directAddLot(name.value, lat.value, lng.value, address.value, total.value, area.value); completeAddLot.reset()" #addLotForm="ngForm">
+      <label for="name" style="color: black">Name</label>
+      <input pInputText type="text" required [(ngModel)]="name.value" id="name" name="name" #name>
+      <label for="lat" style="color: black">Latitude</label>
+      <input pInputText type="number" required [(ngModel)]="lat.value" id="lat" name="lat" #lat>
+      <label for="lng" style="color: black">Longitude</label>
+      <input pInputText type="number" required [(ngModel)]="lng.value" id="lng" name="lng" #lng>
+      <label for="address" style="color: black">Address</label>
+      <input pInputText type="text" required [(ngModel)]="address.value" id="address" name="address" #address>
+      <label for="total" style="color: black">Capacity</label>
+      <input pInputText type="number" required [(ngModel)]="total.value" id="total" name="total" #total>
+      <label for="area" style="color: black">Area</label>
+      <select pInputText style="margin-bottom: 20px" name="area" id="area" [(ngModel)]="area.value" required #area>
+          <option *ngFor="let area of areas" value="{{area.name}},{{area.$key}}">{{area.name}}</option>
+      </select>
+      <br>
+      <p-footer>
+          <button pButton icon="fa-arrow-circle-right" iconPos="right" class="button expanded ui-button-info" label="Next" type="submit" [disabled]="!addLotForm.form.valid"></button>
+          <button pButton icon="fa-recycle" iconPos="right" class="button expanded ui-button-warning" label="Clear all" type="button" (click)="addLotForm.reset()"></button>
+      </p-footer>
+    </form>
+</p-dialog>
+
+<!--@@@@@@@@@@@@@@@@@@@@@@@              Direct Add Handler for Direct Add Lot             @@@@@@@@@@@@@@@@@@@@@@@-->
+<p-dialog header="Associate Handler" [(visible)]="dAddHandler" modal="modal" width="300" responsive="true">
+    <form (ngSubmit)="completeLot(uname.value, pword.value)" #completeAddLot="ngForm">
+        <div [hidden]="!handlerUsernameError">
+            <span style="color: darkorange"><i>Username already exists!</i></span>
+        </div>
+      <label for="uname" style="color: black">Username</label>
+      <input pInputText type="text" required [(ngModel)]="uname.value" id="uname" name="uname" #uname>
+      <label for="pword" style="color: black">Password</label>
+      <input pInputText type="password" required [(ngModel)]="pword.value" id="pword" name="pword" #pword><br>
+      <p-footer>
+          <button pButton icon="fa-save" iconPos="right" class="button expanded ui-button-info" label="Save" type="submit" [disabled]="!completeAddLot.form.valid"></button>
+          <button pButton icon="fa-recycle" iconPos="right" class="button expanded ui-button-warning" label="Clear all" type="button" (click)="completeAddLot.reset()"></button>
+          <button pButton icon="fa-arrow-circle-left" iconPos="right" class="button expanded ui-button-danger" label="Back" type="button" (click)="dAddHandler=false; dAddLot=true; addLotForm.reset()"></button>
+      </p-footer>
+    </form>
+</p-dialog>
+
+<p-dialog header="Associate Handler" [(visible)]="addHandler" modal="modal" width="300" responsive="true">
+    <form (ngSubmit)="completeArea(uname.value, pword.value)" #completeAddArea="ngForm">
+        <div [hidden]="!handlerUsernameError">
+            <span style="color: darkorange"><i>Username already exists!</i></span>
+        </div>
+      <label for="uname" style="color: black">Username</label>
+      <input pInputText type="text" required [(ngModel)]="uname.value" id="uname" name="uname" #uname>
+      <label for="pword" style="color: black">Password</label>
+      <input pInputText type="password" required [(ngModel)]="pword.value" id="pword" name="pword" #pword><br>
+      <p-footer>
+          <button pButton icon="fa-save" iconPos="right" class="button expanded ui-button-info" label="Save" type="submit" [disabled]="!completeAddArea.form.valid"></button>
+          <button pButton icon="fa-recycle" iconPos="right" class="button expanded ui-button-warning" label="Clear all" type="button" (click)="completeAddArea.reset()"></button>
+          <button pButton icon="fa-arrow-circle-left" iconPos="right" class="button expanded ui-button-danger" label="Back" type="button" (click)="addHandler=false; addLot=true; activeAddLot.reset()"></button>
+      </p-footer>
+    </form>
+</p-dialog>
+
+<br>
+<div class="row">
+    <h4>Area and Lots</h4>
+    <button pButton class="button ui-button-success" label="Add Area" icon="fa-map" iconPos="left" (click)="addArea=true; activeAddArea.reset()" ></button>
+    <button pButton class="button ui-button-success" label="Add Lot" icon="fa-map-marker" iconPos="left" (click)="dAddLot=true; addLotForm.reset()"></button>
+</div>
+<div class="row">
+    <p-tabView>
+        <p-tabPanel header="Areas" leftIcon="fa-map">
+            <p-dataTable #dtareas [value]="areas" scrollable="true" scrollHeight="500px" [globalFilter]="gbareas">
+                <p-header>Areas
+                    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+                        <input #gbareas type="text" pInputText size="50" placeholder="Search">
+                    </div>
+                </p-header>
+                <p-column field="name" header="Name" [style]="{'width':'360px','color':'black'}"></p-column>
+                <p-column field="lng" header="Longitude" [style]="{'width':'125px','color':'black'}"></p-column>
+                <p-column field="lat" header="Latitude" [style]="{'width':'125px','color':'black'}"></p-column>
+                <p-column field="creationDate" header="Creation Date" [style]="{'width':'500px','color':'black'}"></p-column>
+                <p-column styleClass="col-button" [style]="{'width':'47px'}">
+                    <ng-template pTemplate="header">
+                        <button type="button" pButton icon="fa-refresh"></button>
+                    </ng-template>
+                    <ng-template let-area="rowData" pTemplate="body">
+                        <button type="button" pButton icon="fa-trash" (click)="confirmDeleteArea(area)"></button>
+                    </ng-template>
+                </p-column>
+                <p-footer>
+                    <div class="ui-helper-clearfix">
+                        <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export Areas" class="ui-button-warning" (click)="dtareas.exportCSV()" style="float:left"></button>
+                    </div>
+                </p-footer>
+            </p-dataTable>
+        </p-tabPanel>
+        <p-tabPanel header="Lots" leftIcon="fa-map-marker">
+            <p-dataTable #dtlots [value]="lots" scrollable="true" scrollHeight="500px" scrollWidth="100%" [globalFilter]="gblots">
+                <p-header>Lots
+                    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+                        <input #gblots type="text" pInputText size="50" placeholder="Search">
+                    </div>
+                </p-header>
+                <!--<p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header" [style]="{'width':'250px','color':'black','text-align':'center'}"></p-column>-->
+                <p-column field="name" header="Name" [style]="{'width':'250px','color':'black'}"></p-column>
+                <p-column field="address" header="Address" [style]="{'width':'350px','color':'black'}"></p-column>
+                <p-column field="lng" header="Longitude" [style]="{'width':'125px','color':'black'}"></p-column>
+                <p-column field="lat" header="Latitude" [style]="{'width':'125px','color':'black'}"></p-column>
+                <p-column field="fk_areaName" header="Area Name" [style]="{'width':'250px','color':'black'}"></p-column>
+                <p-column field="total" header="Capacity" [style]="{'width':'100px','color':'black'}"></p-column>
+                <p-column field="booked" header="Booked"[style]="{'width':'100px','color':'black'}"></p-column>
+                <p-column field="free" header="Free" [style]="{'width':'100px','color':'black'}"></p-column>
+                <p-column field="occupied" header="Occupied" [style]="{'width':'100px','color':'black'}"></p-column>
+                <p-column field="creationDate" header="Creation Date" [style]="{'width':'500px','color':'black'}"></p-column>
+                <p-column styleClass="col-button" [style]="{'width':'47px'}">
+                    <ng-template pTemplate="header">
+                        <button type="button" pButton icon="fa-refresh"></button>
+                    </ng-template>
+                    <ng-template let-lot="rowData" pTemplate="body">
+                        <button type="button" pButton icon="fa-trash" (click)="confirmDeleteLot(lot)"></button>
+                    </ng-template>
+                </p-column>
+                <p-footer>
+                    <div class="ui-helper-clearfix">
+                        <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export Lots" class="ui-button-warning" (click)="dtlots.exportCSV()" style="float:left"></button>
+                    </div>
+                </p-footer>
+            </p-dataTable>
+        </p-tabPanel>
+    </p-tabView>
+</div>
+<db-area-lot-logs></db-area-lot-logs>

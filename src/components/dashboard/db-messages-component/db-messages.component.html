@@ -1,0 +1,97 @@
+<p-growl [value]="msgs" sticky="sticky"></p-growl>
+
+<p-confirmDialog width="425"></p-confirmDialog>
+
+<p-blockUI [blocked]="blockedPanel">
+    <img src="./assets/loading-small.gif" style="position:absolute;top:50%;left:50%;width:30px;height:30px">
+</p-blockUI>
+
+<p-dialog header="Send New Message" [(visible)]="addMessage" modal="modal" width="300" responsive="true">
+    <form (ngSubmit)="addMessageToLots(sub.value, msg.value, lot.value)" #addMessageForm="ngForm">
+      <label for="sub" style="color: black">Subject</label>
+      <input pInputText type="text" required [(ngModel)]="sub.value" id="sub" name="sub" #sub>
+      <label for="msg" style="color: black">Message</label>
+      <textarea pInputText name="msg" id="msg" cols="30" rows="10" required [(ngModel)]="msg.value" #msg></textarea>
+      
+      <label for="lot" style="color: black">Lot</label>
+      <select pInputText style="margin-bottom: 20px" name="lot" id="lot" [(ngModel)]="lot.value" required #lot>
+          <option *ngFor="let lot of lots" value="{{lot.name}},{{lot.$key}}">{{lot.name}}</option>
+      </select>
+      <br>
+      <p-footer>
+          <button pButton icon="fa-send" iconPos="right" class="button expanded ui-button-info" label="Send Message" type="submit" [disabled]="!addMessageForm.form.valid"></button>
+          <button pButton icon="fa-recycle" iconPos="right" class="button expanded ui-button-warning" label="Clear all" type="button" (click)="addMessageForm.reset()"></button>
+      </p-footer>
+    </form>
+</p-dialog>
+
+<br>
+<div class="row">
+    <h4>Messages and Messages Logs</h4>
+    <button pButton class="button ui-button-success" label="Send New Message" icon="fa-file-text" iconPos="left" (click)="addMessage=true; addMessageForm.reset()"></button>
+</div>
+
+<div class="row">
+    <p-tabView>
+        <p-tabPanel header="Messages" leftIcon="fa-file-text">
+            <p-dataTable #dtmessages [value]="messages" scrollable="true" scrollHeight="500px"  scrollWidth="100%" [globalFilter]="gbmessages">
+                <p-header>Messages
+                    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+                        <input #gbmessages type="text" pInputText size="50" placeholder="Search">
+                    </div>
+                </p-header>
+                <p-column field="fk_lotKey" header="Lot Key" [style]="{'width':'250px','color':'black'}"></p-column>
+                <p-column field="fk_lotName" header="Lot Name" [style]="{'width':'250px','color':'black'}"></p-column>
+                <p-column field="subject" header="Subject" [style]="{'width':'350px','color':'black'}"></p-column>
+                <p-column field="message" header="Message" [style]="{'width':'600px','color':'black'}"></p-column>
+                <p-column field="timeStamp" header="Time Stamp" [style]="{'width':'500px','color':'black'}"></p-column>
+                <p-column styleClass="col-button" [style]="{'width':'47px'}">
+                    <ng-template pTemplate="header">
+                        <button type="button" pButton icon="fa-refresh"></button>
+                    </ng-template>
+                    <ng-template let-message="rowData" pTemplate="body">
+                        <button type="button" pButton icon="fa-trash" (click)="confirmDeleteMessage(message)"></button>
+                    </ng-template>
+                </p-column>
+                <p-footer>
+                    <div class="ui-helper-clearfix">
+                        <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export Messages" class="ui-button-warning" (click)="dtmessages.exportCSV()" style="float:left"></button>
+                        <button type="button" pButton icon="fa-repeat" iconPos="left" label="Load All" class="ui-button-danger" (click)="getMessages()" style="float:right"></button>
+                        <button type="button" pButton icon="fa-refresh" iconPos="left" label="Load More" class="ui-button-info" (click)="getMessages(5)" style="float:right"></button>
+                    </div>
+                </p-footer>
+            </p-dataTable>
+        </p-tabPanel>
+        <p-tabPanel header="Messages Logs" leftIcon="fa-book">
+            <p-dataTable #dtmessagelogs [value]="messagelogs" scrollable="true" scrollHeight="500px" expandableRows="true" [globalFilter]="gbmessagelogs">
+                <p-header>Message Logs
+                    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+                        <input #gbmessagelogs type="text" pInputText size="50" placeholder="Search">
+                    </div>
+                </p-header>
+                <p-column expander="true" styleClass="col-icon" [style]="{'width':'37px'}"></p-column>
+                <p-column field="action" header="Action" [style]="{'width':'100px','color':'black'}"></p-column>
+                <p-column field="fk_lotKey" header="Lot Key"[style]="{'width':'260px','color':'black'}"></p-column>
+                <p-column field="fk_lotName" header="Lot Name" [style]="{'width':'260px','color':'black'}"></p-column>
+                <p-column field="timeStamp" header="Time Stamp" [style]="{'width':'500px','color':'black'}"></p-column>
+                <ng-template let-messagelog pTemplate="rowexpansion">
+                    <div class="row">
+                        <div class="large-2 columns" style="color: black"><strong>Subject: </strong></div>
+                        <div class="large-10 columns" style="color: black">{{messagelog.info.subject}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="large-2 columns" style="color: black"><strong>Message: </strong></div>
+                        <div class="large-10 columns" style="color: black">{{messagelog.info.message}}</div>
+                    </div>
+                </ng-template>
+                <p-footer>
+                    <div class="ui-helper-clearfix">
+                        <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export Message Logs" class="ui-button-warning" (click)="dtmessagelogs.exportCSV()" style="float:left"></button>
+                        <button type="button" pButton icon="fa-repeat" iconPos="left" label="Load All" class="ui-button-danger" (click)="getMessageLogs()" style="float:right"></button>
+                        <button type="button" pButton icon="fa-refresh" iconPos="left" label="Load More" class="ui-button-info" (click)="getMessageLogs(5)" style="float:right"></button>
+                    </div>
+                </p-footer>
+            </p-dataTable>
+        </p-tabPanel>
+    </p-tabView>
+</div>

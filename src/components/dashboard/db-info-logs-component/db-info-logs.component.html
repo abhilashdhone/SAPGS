@@ -1,0 +1,60 @@
+<br>
+<div class="row">
+    <h4>Info Logs</h4>
+</div>
+<div class="row">
+    <p-tabView>
+        <p-tabPanel header="Info Logs" leftIcon="fa-book">
+            <p-dataTable #dtinfologs [value]="infologs" scrollable="true" scrollHeight="500px" expandableRows="true" [globalFilter]="gbinfologs">
+                <p-header>Info Logs
+                    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+                        <input #gbinfologs type="text" pInputText size="50" placeholder="Search">
+                    </div>
+                </p-header>
+                <p-column expander="true" styleClass="col-icon" [style]="{'width':'37px'}"></p-column>
+                <p-column field="action" header="Action" [style]="{'width':'120px','color':'black'}"></p-column>
+                <p-column field="fk_areaName" header="Area Name" [style]="{'width':'250px','color':'black'}"></p-column>
+                <p-column field="fk_lotName" header="Lot Name" [style]="{'width':'250px','color':'black'}"></p-column>
+                <p-column field="timeStamp" header="Time Stamp" [style]="{'width':'500px','color':'black'}"></p-column>
+                <ng-template let-infologs pTemplate="rowexpansion">
+                        <div class="row">
+                            <div class="large-2 columns" style="color: black"><strong>Name: </strong></div>
+                            <div class="large-10 columns" style="color: black">{{infologs.info.name}}</div>
+                        </div>
+                        <div class="row" *ngIf="infologs.info.registraion">
+                            <div class="large-2 columns" style="color: black"><strong>Registration: </strong></div>
+                            <div class="large-10 columns" style="color: black">{{infologs.info.registraion}}</div>
+                        </div>
+                        <div class="row" *ngIf="infologs.info.license">
+                            <div class="large-2 columns" style="color: black"><strong>License: </strong></div>
+                            <div class="large-10 columns" style="color: black">{{infologs.info.license}}</div>
+                        </div>
+                        <div class="row" *ngIf="infologs.info.handlerid">
+                            <div class="large-2 columns" style="color: black"><strong>Handler ID: </strong></div>
+                            <div class="large-10 columns" style="color: black">{{infologs.info.handlerid}}</div>
+                        </div>
+                        <div class="row" *ngIf="infologs.info.contact">
+                            <div class="large-2 columns" style="color: black"><strong>Contact: </strong></div>
+                            <div class="large-10 columns" style="color: black">{{infologs.info.contact}}</div>
+                        </div>
+                        <div class="row" *ngIf="infologs.info.code">
+                            <div class="large-2 columns" style="color: black"><strong>Code: </strong></div>
+                            <div class="large-10 columns" style="color: black">{{infologs.info.code}}</div>
+                        </div>
+                        <div class="row" *ngIf="infologs.info.userid">
+                            <div class="large-2 columns" style="color: black"><strong>User ID: </strong></div>
+                            <div class="large-10 columns" style="color: black">{{infologs.info.userid}}</div>
+                        </div>
+                </ng-template>
+                <p-footer>
+                    <div class="ui-helper-clearfix">
+                        <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export Info Logs" class="ui-button-warning" (click)="dtinfologs.exportCSV()" style="float:left"></button>
+                        <button type="button" pButton icon="fa-repeat" iconPos="left" label="Load All" class="ui-button-danger" (click)="getInfoLogs()" style="float:right"></button>
+                        <button type="button" pButton icon="fa-refresh" iconPos="left" label="Load More" class="ui-button-info" (click)="getInfoLogs(5)" style="float:right"></button>
+                    </div>
+                </p-footer>
+            </p-dataTable>
+        </p-tabPanel>
+    </p-tabView>
+            
+</div>

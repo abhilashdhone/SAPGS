@@ -1,0 +1,50 @@
+<br>
+<div class="row">
+    <h4>User and Handler Logs</h4>
+</div>
+<div class="row">
+    <p-tabView>
+        <p-tabPanel header="User Logs" leftIcon="fa-book">
+            <p-dataTable #dtuserlogs [value]="userlogs" scrollable="true" scrollHeight="500px"  scrollWidth="100%" [globalFilter]="gbuserlogs">
+                <p-header>User Logs
+                    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+                        <input #gbuserlogs type="text" pInputText size="50" placeholder="Search">
+                    </div>
+                </p-header>
+                <p-column field="action" header="Action" [style]="{'width':'100px','color':'black'}"></p-column>
+                <p-column field="fk_userKey" header="User ID" [style]="{'width':'250px','color':'black'}"></p-column>
+                <p-column field="fk_userName" header="Username" [style]="{'width':'250px','color':'black'}"></p-column>
+                <p-column field="fk_userFirstName" header="User First Name" [style]="{'width':'200px','color':'black'}"></p-column>
+                <p-column field="fk_userLastName" header="User Last Name" [style]="{'width':'200px','color':'black'}"></p-column>
+                <p-column field="timeStamp" header="Time Stamp" [style]="{'width':'500px','color':'black'}"></p-column>
+                <p-footer>
+                    <div class="ui-helper-clearfix">
+                        <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export User Logs" class="ui-button-warning" (click)="dtuserlogs.exportCSV()" style="float:left"></button>
+                        <button type="button" pButton icon="fa-repeat" iconPos="left" label="Load All" class="ui-button-danger" (click)="getUserLogs()" style="float:right"></button>
+                        <button type="button" pButton icon="fa-refresh" iconPos="left" label="Load More" class="ui-button-info" (click)="getUserLogs(5)" style="float:right"></button>
+                    </div>
+                </p-footer>
+            </p-dataTable>
+        </p-tabPanel>
+        <p-tabPanel header="Handler Logs" leftIcon="fa-book">
+            <p-dataTable #dthandlerlogs [value]="handlerlogs" scrollable="true" scrollHeight="500px" scrollWidth="100%" [globalFilter]="gbhandlerlogs">
+                <p-header>Handler Logs
+                    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+                        <input #gbhandlerlogs type="text" pInputText size="50" placeholder="Search">
+                    </div>
+                </p-header>
+                <p-column field="action" header="Action" [style]="{'width':'101px','color':'black'}"></p-column>
+                <p-column field="fk_handlerKey" header="Handler ID"[style]="{'width':'278px','color':'black'}"></p-column>
+                <p-column field="fk_handlerUserName" header="Handler Username" [style]="{'width':'278px','color':'black'}"></p-column>
+                <p-column field="timeStamp" header="Time Stamp" [style]="{'width':'500px','color':'black'}"></p-column>
+                <p-footer>
+                    <div class="ui-helper-clearfix">
+                        <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export Handler Logs" class="ui-button-warning" (click)="dthandlerlogs.exportCSV()" style="float:left"></button>
+                        <button type="button" pButton icon="fa-repeat" iconPos="left" label="Load All" class="ui-button-danger" (click)="getHandlerLogs()" style="float:right"></button>
+                        <button type="button" pButton icon="fa-refresh" iconPos="left" label="Load More" class="ui-button-info" (click)="getHandlerLogs(5)" style="float:right"></button>
+                    </div>
+                </p-footer>
+            </p-dataTable>
+        </p-tabPanel>
+    </p-tabView>
+</div>

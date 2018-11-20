@@ -1,0 +1,50 @@
+<br>
+<div class="row">
+    <h4>Users and Handlers</h4>
+</div>
+<div class="row">
+    <p-tabView>
+        <p-tabPanel header="Users" leftIcon="fa-users">
+            <p-dataTable #dtusers [value]="users" scrollable="true" scrollHeight="500px"  scrollWidth="100%" [globalFilter]="gbusers">
+                <p-header>Users
+                    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+                        <input #gbusers type="text" pInputText size="50" placeholder="Search">
+                    </div>
+                </p-header>
+                <p-column field="userName" header="Username" [style]="{'width':'401px','color':'black'}"></p-column>
+                <p-column field="firstName" header="First Name" [style]="{'width':'278px','color':'black'}"></p-column>
+                <p-column field="lastName" header="Last Name" [style]="{'width':'278px','color':'black'}"></p-column>
+                <p-column field="isLoggedIn" header="Logged In" [style]="{'width':'100px','color':'black'}"></p-column>
+                <p-column field="isBooked" header="Booked" [style]="{'width':'100px','color':'black'}"></p-column>
+                <p-footer>
+                    <div class="ui-helper-clearfix">
+                        <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export Users" class="ui-button-warning" (click)="dtusers.exportCSV()" style="float:left"></button>
+                        <button type="button" pButton icon="fa-repeat" iconPos="left" label="Load All" class="ui-button-danger" (click)="getUsers()" style="float:right"></button>
+                        <button type="button" pButton icon="fa-refresh" iconPos="left" label="Load More" class="ui-button-info" (click)="getUsers(5)" style="float:right"></button>
+                    </div>
+                </p-footer>
+            </p-dataTable>
+        </p-tabPanel>
+        <p-tabPanel header="Handlers" leftIcon="fa-user-secret">
+            <p-dataTable #dthandlers [value]="handlers" scrollable="true" scrollHeight="500px" scrollWidth="100%" [globalFilter]="gbhandlers">
+                <p-header>Handlers
+                    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+                        <input #gbhandlers type="text" pInputText size="50" placeholder="Search">
+                    </div>
+                </p-header>
+                <p-column field="username" header="Username" [style]="{'width':'401px','color':'black'}"></p-column>
+                <p-column field="lotKey" header="Lot ID"[style]="{'width':'306px','color':'black'}"></p-column>
+                <p-column field="lotName" header="Lot Name" [style]="{'width':'350px','color':'black'}"></p-column>
+                <p-column field="isLoggedIn" header="Logged In" [style]="{'width':'100px','color':'black'}"></p-column>
+                <p-footer>
+                    <div class="ui-helper-clearfix">
+                        <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export Handlers" class="ui-button-warning" (click)="dthandlers.exportCSV()" style="float:left"></button>
+                        <button type="button" pButton icon="fa-repeat" iconPos="left" label="Load All" class="ui-button-danger" (click)="getHandlers()" style="float:right"></button>
+                        <button type="button" pButton icon="fa-refresh" iconPos="left" label="Load More" class="ui-button-info" (click)="getHandlers(5)" style="float:right"></button>
+                    </div>
+                </p-footer>
+            </p-dataTable>
+        </p-tabPanel>
+    </p-tabView>
+</div>
+<db-user-handler-logs></db-user-handler-logs>
